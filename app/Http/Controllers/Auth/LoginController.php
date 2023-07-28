@@ -26,6 +26,6 @@ class LoginController extends Controller
     {
         $result = $this->authService->login($request->all());
 
-        return response()->success('User Register Successfully', Response::HTTP_CREATED, $result);
+        return response()->success('User Login Successfully', Response::HTTP_CREATED, $result);
     }
 }
