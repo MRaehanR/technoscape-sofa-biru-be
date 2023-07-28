@@ -26,6 +26,6 @@ class RegisterController extends Controller
     {
         $result = $this->authService->register($request->all());
 
-        return response()->success('User Register Successfully', Response::HTTP_CREATED, ["access_token" => $result]);
+        return response()->success('User Register Successfully', Response::HTTP_CREATED, $result);
     }
 }

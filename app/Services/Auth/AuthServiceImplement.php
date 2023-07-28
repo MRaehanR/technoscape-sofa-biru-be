@@ -23,7 +23,7 @@ class AuthServiceImplement implements AuthService
 
             $accessToken = $user->createToken('access_token')->plainTextToken;
 
-            return $accessToken;
+            return ['user' => $user, 'access_token' => $accessToken];
         } catch (\Throwable $th) {
             throw $th;
         }
