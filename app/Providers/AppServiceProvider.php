@@ -2,10 +2,20 @@
 
 namespace App\Providers;
 
+use App\Services\Auth\AuthService;
+use App\Services\Auth\AuthServiceImplement;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
-class AppServiceProvider extends ServiceProvider
+class AppServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    public function provides(): array
+    {
+        return [
+            AuthService::class
+        ];
+    }
+
     /**
      * Register any application services.
      *
@@ -13,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->services();
     }
 
     /**
@@ -24,5 +34,10 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //
+    }
+
+    private function services()
+    {
+        $this->app->singleton(AuthService::class, AuthServiceImplement::class);
     }
 }
