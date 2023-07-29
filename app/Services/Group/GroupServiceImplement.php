@@ -113,9 +113,7 @@ class GroupServiceImplement implements GroupService
         if (count($groupItems) === 0) {
             throw new ResponseException("Group Item Not Found", 404);
         }
-        
-        $formattedAmount = number_format($groupItems->total, 0, null, '.');
-        $groupItems->total = 'Rp ' . $formattedAmount;
+
         return ['group_items' => $groupItems];
     }
 
