@@ -37,7 +37,7 @@ Route::get('/groups', GroupListController::class)->middleware(['auth:sanctum']);
 Route::post('/groups/join', JoinGroupController::class)->middleware(['auth:sanctum']);
 
 Route::post('/groups/items', CreateGroupItemController::class)->middleware(['auth:sanctum']);
-Route::get('/groups/{group_id}/items', GetGroupItemListController::class)->middleware(['auth:sanctum']);
+Route::get('/groups/{group_code}/items', GetGroupItemListController::class)->middleware(['auth:sanctum']);
 
 
 Route::post('/wallets/topup', TopUpWalletController::class)->middleware(['auth:sanctum']);

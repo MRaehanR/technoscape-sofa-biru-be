@@ -22,9 +22,9 @@ class GetGroupItemListController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke($group_id)
+    public function __invoke($group_code)
     {
-        $result = $this->groupService->getGroupItemList($group_id);
+        $result = $this->groupService->getGroupItemList($group_code);
 
         return response()->success('Success Sent Group List', Response::HTTP_OK, $result);
     }

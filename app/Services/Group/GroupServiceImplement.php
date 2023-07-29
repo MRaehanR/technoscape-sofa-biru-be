@@ -72,6 +72,7 @@ class GroupServiceImplement implements GroupService
 
     public function groupList()
     {
+        $data = [];
         $user = Auth::user();
 
         $groups = Group::with('members')->whereHas('members', function ($query) use ($user) {
@@ -79,15 +80,20 @@ class GroupServiceImplement implements GroupService
         })->get();
 
         foreach ($groups as $group) {
-            unset($group->members);
+            $data[] = [
+                'id' => $group->id,
+                'name' => $group->name,
+                'code' => $group->code,
+                'url_item' => '/groups/' . $group->code . '/items'
+            ];
         }
 
-        return ['groups' => $groups];
+        return ['groups' => $data];
     }
 
-    public function getGroupItemList(int $group_id)
+    public function getGroupItemList(string $group_code)
     {
-        $group = Group::where('id', $group_id)->first();
+        $group = Group::where('code', $group_code)->first();
 
         if (!$group) {
             throw new ResponseException("Group Not Found", 404);

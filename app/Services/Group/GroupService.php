@@ -8,5 +8,5 @@ interface GroupService
     public function joinGroup(array $data);
     public function createGroupItem(array $data);
     public function groupList();
-    public function getGroupItemList(int $group_id);
+    public function getGroupItemList(string $group_code);
 }
