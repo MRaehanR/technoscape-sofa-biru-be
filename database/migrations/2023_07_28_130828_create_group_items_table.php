@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('group_items', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('groups');
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('title');
-            $table->string('total');
+            $table->integer('total');
             $table->date('due_date');
             $table->timestamps();
         });
