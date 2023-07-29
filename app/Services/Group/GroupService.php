@@ -9,4 +9,5 @@ interface GroupService
     public function createGroupItem(array $data);
     public function groupList();
     public function getGroupItemList(string $group_code);
+    public function getGroupMemberList(string $group_code);
 }

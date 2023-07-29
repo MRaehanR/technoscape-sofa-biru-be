@@ -35,6 +35,6 @@ class User extends Authenticatable
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class)->withPivot('is_manager')->withTimestamps();
+        return $this->belongsToMany(Group::class);
     }
 }
