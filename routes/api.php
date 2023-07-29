@@ -1,12 +1,12 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\GroupController;
-use App\Services\Auth\AuthServiceImplement;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Group\CreateGroupController;
+use App\Http\Controllers\Group\JoinGroupController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Services\Auth\AuthServiceImplement;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +27,5 @@ Route::post('/auth/register', RegisterController::class);
 Route::post('/auth/login', LoginController::class);
 Route::post('/auth/logout', AuthServiceImplement::class);
 
-Route::post('/groups/create', CreateGroupController::class);
+Route::post('/groups', CreateGroupController::class)->middleware(['auth:sanctum']);
+Route::post('/groups/join', JoinGroupController::class)->middleware(['auth:sanctum']);
