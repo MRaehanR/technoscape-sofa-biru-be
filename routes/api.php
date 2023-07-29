@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Group\CreateGroupController;
+use App\Http\Controllers\Group\JoinGroupController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,4 +28,5 @@ Route::post('/auth/register', RegisterController::class);
 Route::post('/auth/login', LoginController::class);
 Route::post('/auth/logout', LogoutController::class)->middleware(['auth:sanctum']);
 
-Route::post('/groups/create', CreateGroupController::class);
+Route::post('/groups', CreateGroupController::class)->middleware(['auth:sanctum']);
+Route::post('/groups/join', JoinGroupController::class)->middleware(['auth:sanctum']);

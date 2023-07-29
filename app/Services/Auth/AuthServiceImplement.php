@@ -55,7 +55,7 @@ class AuthServiceImplement implements AuthService
             throw new ResponseException('Account not found', Response::HTTP_NOT_FOUND);
         }
 
-        if (!$user->email === $data['email'] && $user->password === $data['password']) {
+        if (!$user->email === $data['email'] && !$user->password === $data['password']) {
             throw new ResponseException('Email or Password does not match', Response::HTTP_UNAUTHORIZED);
         }
 
