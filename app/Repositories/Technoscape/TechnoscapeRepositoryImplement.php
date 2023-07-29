@@ -60,7 +60,7 @@ class TechnoscapeRepositoryImplement implements TechnoscapeRepository
     {
         $url = config('const.technoscape_url') . '/bankAccount/create';
         $body = [
-            'balance' => $balance
+            'balance' => 1000000
         ];
 
         $response = Http::withHeaders([
