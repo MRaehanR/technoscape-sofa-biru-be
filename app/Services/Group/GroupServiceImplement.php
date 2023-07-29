@@ -76,6 +76,8 @@ class GroupServiceImplement implements GroupService
             'due_date' => $data['due_date']
         ]);
 
+        $formattedAmount = number_format($groupItem->total, 0, null, '.');
+        $groupItem->total = 'Rp ' . $formattedAmount;
         return ['group' => $group, 'new_group_item' => $groupItem];
     }
 
