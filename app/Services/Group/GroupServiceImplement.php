@@ -169,4 +169,23 @@ class GroupServiceImplement implements GroupService
 
         return ['transaction_item' => $transactionItem];
     }
+
+    public function getHistoriesPayment(int $group_items_id)
+    {
+        $data = [];
+        $historiesPayment = ItemsTransaction::with('user')->where('group_items_id', $group_items_id)->get();
+
+        foreach ($historiesPayment as $history) {
+            $data[] = [
+                "id" => $history->user->id,
+                "username" => $history->user->username,
+                "email" => $history->user->email,
+                "phone" => $history->user->phone,
+                "birth_date" => $history->user->birth_date,
+                "account_number" => $history->user->account_number,
+            ];
+        }
+
+        return ['histories_payment' => $data];
+    }
 }

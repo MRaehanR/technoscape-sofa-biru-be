@@ -9,6 +9,7 @@ use App\Http\Controllers\Group\CreateGroupController;
 use App\Http\Controllers\Group\CreateGroupItemController;
 use App\Http\Controllers\Group\GetGroupItemListController;
 use App\Http\Controllers\Group\GetGroupMemberListController;
+use App\Http\Controllers\Group\GetHistoriesPaymentGroupItemController;
 use App\Http\Controllers\Group\GroupListController;
 use App\Http\Controllers\Group\JoinGroupController;
 use App\Http\Controllers\Group\PayGroupItemController;
@@ -42,6 +43,7 @@ Route::get('/groups/{group_code}/items', GetGroupItemListController::class)->mid
 Route::get('/groups/{group_code}/members', GetGroupMemberListController::class)->middleware(['auth:sanctum']);
 
 Route::post('/groups/{group_code}/items/{item_id}/pay', PayGroupItemController::class)->middleware(['auth:sanctum']);
+Route::post('/groups/items/{item_id}/pay/history', GetHistoriesPaymentGroupItemController::class)->middleware(['auth:sanctum']);
 
 
 Route::post('/wallets/topup', TopUpWalletController::class)->middleware(['auth:sanctum']);
