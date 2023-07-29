@@ -26,6 +26,8 @@ class WalletServiceImplement implements WalletService
         $technoscapeAccessToken = $this->technoscapeRepository->createAccessToken($user->username, $user->password)->accessToken;
         $topupWallet = $this->technoscapeRepository->addBalance($technoscapeAccessToken, $data['amount'], $user->account_number);
 
+        $formattedAmount = number_format($topupWallet->amount, 0, null, '.');
+        $topupWallet->amount = 'Rp ' . $formattedAmount;
         return ['topup' => $topupWallet];
     }
 }
