@@ -6,7 +6,7 @@ interface GroupService
 {
     public function createGroup(array $data);
     public function joinGroup(array $data);
-    public function createGroupItem(array $data);
+    public function createGroupItem(array $data, string $group_code);
     public function groupList();
     public function getGroupItemList(string $group_code);
     public function getGroupMemberList(string $group_code);

@@ -23,9 +23,9 @@ class CreateGroupItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function __invoke(CreateGroupItemRequest $request)
+    public function __invoke(CreateGroupItemRequest $request, $group_code)
     {
-        $result = $this->groupService->createGroupItem($request->all());
+        $result = $this->groupService->createGroupItem($request->all(), $group_code);
 
         return response()->success('Success Created Group Item', Response::HTTP_CREATED, $result);
     }

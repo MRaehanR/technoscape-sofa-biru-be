@@ -24,7 +24,6 @@ class CreateGroupItemRequest extends Request
     public function rules()
     {
         return [
-            'group_id' => 'required|integer',
             'title' => 'required|string|min:5',
             'total' => 'required|integer',
             'due_date' => 'required|string'

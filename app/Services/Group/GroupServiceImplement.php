@@ -61,9 +61,9 @@ class GroupServiceImplement implements GroupService
         return ['group' => $group, 'new_member' => $newMember];
     }
 
-    public function createGroupItem(array $data)
+    public function createGroupItem(array $data, string $group_code)
     {
-        $group = Group::where('id', $data['group_id'])->first();
+        $group = Group::where('code', $group_code)->first();
 
         if (!$group) {
             throw new ResponseException("Group Not Found", 404);
