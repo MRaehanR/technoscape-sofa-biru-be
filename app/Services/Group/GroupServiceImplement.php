@@ -51,4 +51,37 @@ class GroupServiceImplement implements GroupService
 
         return ['group' => $group, 'new_member' => $newMember];
     }
+    
+    public function createGroupItem(array $data)
+    {
+        $group = Group::where('id', $data['group_id'])->first();
+
+        if (!$group) {
+            throw new ResponseException("Group Not Found", 404);
+        }
+
+        $groupItem = GroupItem::create([
+            'group_id' => $group->id,
+            'title' => $data['title'],
+            'total' => $data['total'],
+            'due_date' => $data['due_date']
+        ]);
+
+        return ['group' => $group, 'new_group_item' => $groupItem];
+    }
+
+    public function groupList()
+    {
+        $user = Auth::user();
+
+        $groups = Group::with('members')->whereHas('members', function($query) use($user){
+            $query->where('user_id', $user->id);
+        })->get();
+
+        foreach ($groups as $group) {
+            unset($group->members);
+        }
+
+        return ['groups' => $groups];
+    }
 }
