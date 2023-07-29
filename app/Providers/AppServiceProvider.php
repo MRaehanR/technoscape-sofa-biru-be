@@ -6,6 +6,8 @@ use App\Services\Auth\AuthService;
 use App\Services\Auth\AuthServiceImplement;
 use App\Services\Group\GroupService;
 use App\Services\Group\GroupServiceImplement;
+use App\Services\Wallet\WalletService;
+use App\Services\Wallet\WalletServiceImplement;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -15,7 +17,8 @@ class AppServiceProvider extends ServiceProvider implements DeferrableProvider
     {
         return [
             AuthService::class,
-            GroupService::class
+            GroupService::class,
+            WalletService::class
         ];
     }
 
@@ -43,5 +46,6 @@ class AppServiceProvider extends ServiceProvider implements DeferrableProvider
     {
         $this->app->singleton(AuthService::class, AuthServiceImplement::class);
         $this->app->singleton(GroupService::class, GroupServiceImplement::class);
+        $this->app->singleton(WalletService::class, WalletServiceImplement::class);
     }
 }

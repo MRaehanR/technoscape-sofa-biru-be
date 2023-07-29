@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Group;
+namespace App\Http\Requests\Wallet;
 
 use App\Http\Requests\Request;
 
-class CreateGroupItemRequest extends Request
+class TopUpWalletRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class CreateGroupItemRequest extends Request
     public function rules()
     {
         return [
-            'group_id' => 'required|integer',
-            'title' => 'required|string|min:5',
-            'total' => 'required|integer',
-            'due_date' => 'required|string'
+            'amount' => 'required|integer|min:10000'
         ];
     }
 }

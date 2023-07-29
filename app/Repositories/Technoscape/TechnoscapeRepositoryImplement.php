@@ -76,4 +76,26 @@ class TechnoscapeRepositoryImplement implements TechnoscapeRepository
 
         return $response->data;
     }
+
+    public function addBalance(string $accessToken, int $amount, int $receiverAccountNumber)
+    {
+        $url = config('const.technoscape_url') . '/bankAccount/addBalance';
+        $body = [
+            'receiverAccountNo' => $receiverAccountNumber,
+            'amount' => $amount
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Bearer $accessToken"
+        ])->post($url, $body);
+
+        $response = json_decode($response->body());
+
+        if (!$response->success) {
+            throw new ResponseException($response->errMsg, 400);
+        }
+
+        return $response->data;
+    }
 }
