@@ -76,8 +76,6 @@ class GroupServiceImplement implements GroupService
             'due_date' => $data['due_date']
         ]);
 
-        $formattedAmount = number_format($groupItem->total, 0, null, '.');
-        $groupItem->total = 'Rp ' . $formattedAmount;
         return ['group' => $group, 'new_group_item' => $groupItem];
     }
 
@@ -115,7 +113,9 @@ class GroupServiceImplement implements GroupService
         if (count($groupItems) === 0) {
             throw new ResponseException("Group Item Not Found", 404);
         }
-
+        
+        $formattedAmount = number_format($groupItems->total, 0, null, '.');
+        $groupItems->total = 'Rp ' . $formattedAmount;
         return ['group_items' => $groupItems];
     }
 
