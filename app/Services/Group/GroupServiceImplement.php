@@ -2,11 +2,12 @@
 
 namespace App\Services\Group;
 
-use App\Exceptions\ResponseException;
 use App\Models\Group;
 use App\Models\GroupItem;
 use App\Models\GroupMember;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Exceptions\ResponseException;
 
 class GroupServiceImplement implements GroupService
 {
@@ -49,23 +50,5 @@ class GroupServiceImplement implements GroupService
         ]);
 
         return ['group' => $group, 'new_member' => $newMember];
-    }
-
-    public function createGroupItem(array $data)
-    {
-        $group = Group::where('id', $data['group_id'])->first();
-
-        if (!$group) {
-            throw new ResponseException("Group Not Found", 404);
-        }
-
-        $groupItem = GroupItem::create([
-            'group_id' => $group->id,
-            'title' => $data['title'],
-            'total' => $data['total'],
-            'due_date' => $data['due_date']
-        ]);
-
-        return ['group' => $group, 'new_group_item' => $groupItem];
     }
 }
