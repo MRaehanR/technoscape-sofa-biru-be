@@ -63,11 +63,4 @@ class AuthServiceImplement implements AuthService
 
         return ['user' => $user, 'access_token' => $accessToken];
     }
-
-    public function logout(Request $request)
-    {
-        $request->user()->currentAccessToken()->delete();
-
-        return response()->success('User Logout Successfully', Response::HTTP_OK);
-    }
 }
