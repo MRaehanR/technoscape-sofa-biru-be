@@ -16,7 +16,7 @@ class GroupController extends Controller
         ]);
 
         $code = Str::upper(Str::random(6));
-        
+
         $group = Group::create([
             'name' => $request->input('name'),
             'description' => $request->input('description'),

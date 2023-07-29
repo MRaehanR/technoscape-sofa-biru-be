@@ -16,4 +16,9 @@ class Group extends Model
         'description',
         'code',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('is_manager')->withTimestamps();
+    }
 }
