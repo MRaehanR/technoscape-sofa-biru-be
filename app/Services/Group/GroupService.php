@@ -10,4 +10,5 @@ interface GroupService
     public function groupList();
     public function getGroupItemList(string $group_code);
     public function getGroupMemberList(string $group_code);
+    public function payGroupItem(string $group_code, int $item_id, $amount);
 }

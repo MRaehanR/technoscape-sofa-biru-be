@@ -8,9 +8,18 @@ use App\Models\GroupMember;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Exceptions\ResponseException;
+use App\Models\ItemsTransaction;
+use App\Repositories\Technoscape\TechnoscapeRepository;
 
 class GroupServiceImplement implements GroupService
 {
+    private $technoscapeRepository;
+
+    public function __construct(TechnoscapeRepository $technoscapeRepository)
+    {
+        $this->technoscapeRepository = $technoscapeRepository;
+    }
+
     public function createGroup(array $data)
     {
         $code = Str::upper(Str::random(6));
@@ -138,5 +147,26 @@ class GroupServiceImplement implements GroupService
             'code' => $member->group->code,
             'url_add_item' => "/groups/" . $member->group->code . "/items"
         ], 'group_members' => $data];
+    }
+
+    public function payGroupItem(string $group_code, int $item_id, $amount)
+    {
+        $groupItem = GroupItem::where('id', $item_id)->first();
+
+        $manager = GroupMember::where('group_id', $groupItem->group_id)->where('is_manager', true)->first();
+        $receiverAccountNumber = $manager->user->account_number;
+
+        $senderAccountNumber = Auth()->user()->account_number;
+
+        $technoscapeAccessToken = $this->technoscapeRepository->createAccessToken(Auth()->user()->username, Auth()->user()->password)->accessToken;
+
+        $this->technoscapeRepository->createTransaction($senderAccountNumber, $receiverAccountNumber, $amount, $technoscapeAccessToken);
+
+        $transactionItem = ItemsTransaction::create([
+            'user_id' => Auth()->user()->id,
+            'group_items_id' => $groupItem->id
+        ]);
+
+        return ['transaction_item' => $transactionItem];
     }
 }

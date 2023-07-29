@@ -11,6 +11,7 @@ use App\Http\Controllers\Group\GetGroupItemListController;
 use App\Http\Controllers\Group\GetGroupMemberListController;
 use App\Http\Controllers\Group\GroupListController;
 use App\Http\Controllers\Group\JoinGroupController;
+use App\Http\Controllers\Group\PayGroupItemController;
 use App\Http\Controllers\Wallet\TopUpWalletController;
 
 /*
@@ -38,8 +39,9 @@ Route::post('/groups/join', JoinGroupController::class)->middleware(['auth:sanct
 
 Route::post('/groups/items', CreateGroupItemController::class)->middleware(['auth:sanctum']);
 Route::get('/groups/{group_code}/items', GetGroupItemListController::class)->middleware(['auth:sanctum']);
-
 Route::get('/groups/{group_code}/members', GetGroupMemberListController::class)->middleware(['auth:sanctum']);
+
+Route::post('/groups/{group_code}/items/{item_id}/pay', PayGroupItemController::class)->middleware(['auth:sanctum']);
 
 
 Route::post('/wallets/topup', TopUpWalletController::class)->middleware(['auth:sanctum']);

@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('items_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('group_items_id');
-            $table->string('image');
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate();
+            $table->foreignId('group_items_id')->constrained('group_items')->cascadeOnUpdate();
             $table->timestamps();
         });
     }

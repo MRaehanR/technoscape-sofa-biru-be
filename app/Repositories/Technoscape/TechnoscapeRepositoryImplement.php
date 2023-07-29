@@ -98,4 +98,27 @@ class TechnoscapeRepositoryImplement implements TechnoscapeRepository
 
         return $response->data;
     }
+
+    public function createTransaction(string $senderAccountNumber, string $receiverAccountNumber, int $amount, string $accessToken)
+    {
+        $url = config('const.technoscape_url') . '/bankAccount/transaction/create';
+        $body = [
+            'senderAccountNo' => $senderAccountNumber,
+            'receiverAccountNo' => $receiverAccountNumber,
+            'amount' => $amount
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Bearer $accessToken"
+        ])->post($url, $body);
+
+        $response = json_decode($response->body());
+
+        if (!$response->success) {
+            throw new ResponseException($response->errMsg, 400);
+        }
+
+        return $response->data;
+    }
 }
