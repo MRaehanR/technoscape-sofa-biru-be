@@ -2,10 +2,11 @@
 
 namespace App\Services\Group;
 
-interface GroupService 
+interface GroupService
 {
     public function createGroup(array $data);
     public function joinGroup(array $data);
     public function createGroupItem(array $data);
     public function groupList();
+    public function getGroupItemList(int $group_id);
 }

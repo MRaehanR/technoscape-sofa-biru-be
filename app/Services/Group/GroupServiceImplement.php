@@ -51,7 +51,7 @@ class GroupServiceImplement implements GroupService
 
         return ['group' => $group, 'new_member' => $newMember];
     }
-    
+
     public function createGroupItem(array $data)
     {
         $group = Group::where('id', $data['group_id'])->first();
@@ -74,7 +74,7 @@ class GroupServiceImplement implements GroupService
     {
         $user = Auth::user();
 
-        $groups = Group::with('members')->whereHas('members', function($query) use($user){
+        $groups = Group::with('members')->whereHas('members', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->get();
 
@@ -83,5 +83,22 @@ class GroupServiceImplement implements GroupService
         }
 
         return ['groups' => $groups];
+    }
+
+    public function getGroupItemList(int $group_id)
+    {
+        $group = Group::where('id', $group_id)->first();
+
+        if (!$group) {
+            throw new ResponseException("Group Not Found", 404);
+        }
+
+        $groupItems = GroupItem::where('group_id', $group->id)->get();
+
+        if (count($groupItems) === 0) {
+            throw new ResponseException("Group Item Not Found", 404);
+        }
+
+        return ['group_items' => $groupItems];
     }
 }
