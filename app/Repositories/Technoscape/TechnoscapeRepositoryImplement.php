@@ -3,6 +3,7 @@
 namespace App\Repositories\Technoscape;
 
 use App\Exceptions\ResponseException;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 
 class TechnoscapeRepositoryImplement implements TechnoscapeRepository
@@ -22,7 +23,7 @@ class TechnoscapeRepositoryImplement implements TechnoscapeRepository
         ];
 
         $response = Http::withHeaders([
-            'Content' => 'application/json'
+            'Content-Type' => 'application/json'
         ])->post($url, $body);
 
         $response = json_decode($response->body());
@@ -31,6 +32,48 @@ class TechnoscapeRepositoryImplement implements TechnoscapeRepository
             throw new ResponseException($response->errMsg, 400);
         }
 
-        return $response;
+        return $response->data;
+    }
+
+    public function createAccessToken(string $username, string $password)
+    {
+        $url = config('const.technoscape_url') . '/user/auth/token';
+        $body = [
+            'username' => $username,
+            'loginPassword' => $password
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json'
+        ])->post($url, $body);
+
+        $response = json_decode($response->body());
+
+        if (!$response->success) {
+            throw new ResponseException($response->errMsg, 400);
+        }
+
+        return $response->data;
+    }
+
+    public function createBankAccount(string $accessToken, int $balance)
+    {
+        $url = config('const.technoscape_url') . '/bankAccount/create';
+        $body = [
+            'balance' => $balance
+        ];
+
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json',
+            'Authorization' => "Bearer $accessToken"
+        ])->post($url, $body);
+
+        $response = json_decode($response->body());
+
+        if (!$response->success) {
+            throw new ResponseException($response->errMsg, 400);
+        }
+
+        return $response->data;
     }
 }

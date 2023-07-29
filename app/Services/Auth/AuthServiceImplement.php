@@ -23,17 +23,22 @@ class AuthServiceImplement implements AuthService
     {
         DB::beginTransaction();
         try {
+            $this->technoscapeRepository->createUser($data);
+            $technoscapeAccessToken = $this->technoscapeRepository->createAccessToken($data['username'], $data['password'])->accessToken;
+            $technoscapeBankAccount = $this->technoscapeRepository->createBankAccount($technoscapeAccessToken, 0);
+
             $user = User::create([
                 'username' => $data['username'],
                 'email' => $data['email'],
-                'password' => Hash::make($data['password']),
+                'password' => $data['password'],
                 'phone' => $data['phone'],
                 'birth_date' => $data['birth_date'],
+                'account_number' => $technoscapeBankAccount->accountNo
             ]);
 
-            $this->technoscapeRepository->createUser($data);
-
             $accessToken = $user->createToken('access_token')->plainTextToken;
+
+            DB::commit();
 
             return ['user' => $user, 'access_token' => $accessToken];
         } catch (\Throwable $th) {
@@ -50,7 +55,7 @@ class AuthServiceImplement implements AuthService
             throw new ResponseException('Account not found', Response::HTTP_NOT_FOUND);
         }
 
-        if (!Auth::attempt(['email' => $data['email'], 'password' => $data['password']])) {
+        if (!$user->email === $data['email'] && $user->password === $data['password']) {
             throw new ResponseException('Email or Password does not match', Response::HTTP_UNAUTHORIZED);
         }
 
