@@ -10,6 +10,10 @@ class Group extends Model
     use HasFactory;
 
     protected $table = 'groups';
-
     protected $guarded = ['id'];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class)->withPivot('is_manager')->withTimestamps();
+    }
 }
